@@ -157,12 +157,14 @@ chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => 
     return;
   }
 
-  const { type, url } = request;
+  const { type, url, options } = request;
   console.debug("Request from:", sender);
+
+  const tabId = null;
 
   switch (type) {
     case OPEN_VIDEO:
-      ff2mpv(url);
+      ff2mpv(url, tabId, [options]);
       return sendResponse("ok");
     default:
       console.warn("No handler for external type:", type);
