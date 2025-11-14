@@ -164,7 +164,7 @@ chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => 
 
   switch (type) {
     case OPEN_VIDEO:
-      ff2mpv(url, tabId, [options]);
+      ff2mpv(url, tabId, options);
       return sendResponse("ok");
     default:
       console.warn("No handler for external type:", type);
