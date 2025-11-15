@@ -165,25 +165,25 @@ chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => 
 
   switch (type) {
     case OPEN_VIDEO:
-    let optionsPromise;
-      if (profileId) {
-        optionsPromise = getOptions(profileId); 
-      } else {
-        optionsPromise = Promise.resolve([]); 
-      }
-      optionsPromise.then((options) => {
-      ff2mpv(url, tabId, options);
-      return sendResponse("ok");
-      });
-      break;
-    case GET_PROFILES:
-      getProfiles().then((profiles) => {
-        sendResponse(profiles); 
-      });
-      return true;
-    default:
-      console.warn("No handler for external type:", type);
-      return sendResponse("failure");
+        let optionsPromise;
+          if (profileId) {
+            optionsPromise = getOptions(profileId); 
+          } else {
+            optionsPromise = Promise.resolve([]); 
+          }
+          optionsPromise.then((options) => {
+            ff2mpv(url, tabId, options);
+            return sendResponse("ok");
+          });
+          break;
+        case GET_PROFILES:
+          getProfiles().then((profiles) => {
+            sendResponse(profiles); 
+          });
+          return true;
+        default:
+          console.warn("No handler for external type:", type);
+          return sendResponse("failure");
   }
 });
 
