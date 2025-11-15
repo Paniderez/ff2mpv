@@ -158,16 +158,24 @@ chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => 
     return;
   }
 
-  const { type, url, options } = request;
+  const { type, url, profileId } = request;
   console.debug("Request from:", sender);
 
   const tabId = null;
 
   switch (type) {
     case OPEN_VIDEO:
+    let optionsPromise;
+      if (profileId) {
+        optionsPromise = getOptions(profileId); 
+      } else {
+        optionsPromise = Promise.resolve([]); 
+      }
+      optionsPromise.then((options) => {
       ff2mpv(url, tabId, options);
       return sendResponse("ok");
-          break;
+      });
+      break;
     case GET_PROFILES:
       getProfiles().then((profiles) => {
         sendResponse(profiles); 
